@@ -16,7 +16,6 @@ fun MovieDiscoveryScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Text(text = demoString)
-
     }
 }
 

@@ -1,4 +1,4 @@
-package com.shohan.moviediscovery.ui.theme
+package com.shohan.moviediscovery.uiUtility.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

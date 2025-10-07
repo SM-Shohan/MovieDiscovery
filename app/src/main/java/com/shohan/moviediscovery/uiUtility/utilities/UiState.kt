@@ -1,4 +1,4 @@
-package com.shohan.moviediscovery.ui.utilities
+package com.shohan.moviediscovery.uiUtility.utilities
 
 sealed class UiState<out T> {
     object Idle : UiState<Nothing>()

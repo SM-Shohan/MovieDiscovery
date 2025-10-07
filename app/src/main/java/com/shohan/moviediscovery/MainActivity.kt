@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
 import com.shohan.moviediscovery.navigation.AppNavGraph
-import com.shohan.moviediscovery.ui.theme.MovieDiscoveryTheme
+import com.shohan.moviediscovery.uiUtility.theme.MovieDiscoveryTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

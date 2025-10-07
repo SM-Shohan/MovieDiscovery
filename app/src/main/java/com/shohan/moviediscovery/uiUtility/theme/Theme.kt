@@ -1,6 +1,5 @@
-package com.shohan.moviediscovery.ui.theme
+package com.shohan.moviediscovery.uiUtility.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
