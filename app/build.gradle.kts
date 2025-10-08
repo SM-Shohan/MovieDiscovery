@@ -64,11 +64,19 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.57")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     kapt("com.google.dagger:hilt-compiler:2.57")
+
+
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.1")
+
+    // for network call
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
     implementation("io.reactivex.rxjava2:rxjava:2.2.21")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
     implementation("com.squareup.retrofit2:adapter-rxjava2:3.0.0")
     implementation("com.squareup.retrofit2:converter-scalars:3.0.0")
+
+    // for network image
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
 }
