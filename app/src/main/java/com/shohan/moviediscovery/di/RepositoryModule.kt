@@ -1,4 +1,6 @@
 package com.shohan.moviediscovery.di
+import com.shohan.moviediscovery.feature.movie_details.data.repoImpl.MovieDetailsRepoImpl
+import com.shohan.moviediscovery.feature.movie_details.domain.repository.MovieDetailsRepo
 import com.shohan.moviediscovery.feature.movie_discovery.data.repositoryImpl.MovieDiscoveryRepoImpl
 import com.shohan.moviediscovery.feature.movie_discovery.domain.repository.MovieDiscoveryRepo
 import dagger.Binds
@@ -11,5 +13,7 @@ import dagger.hilt.components.SingletonComponent
 abstract class RepositoryModule {
 
     @Binds
-    abstract fun bindAuthRepository(impl: MovieDiscoveryRepoImpl): MovieDiscoveryRepo
+    abstract fun bindMovieDiscoveryRepository(impl: MovieDiscoveryRepoImpl): MovieDiscoveryRepo
+    @Binds
+    abstract fun bindMovieDetailsRepository(impl: MovieDetailsRepoImpl): MovieDetailsRepo
 }

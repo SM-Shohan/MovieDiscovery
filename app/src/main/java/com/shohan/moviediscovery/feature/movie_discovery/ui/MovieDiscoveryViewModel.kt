@@ -16,14 +16,11 @@ import javax.inject.Inject
 class MovieDiscoveryViewModel @Inject constructor(
     private val trendingMovieUseCase: TrendingMovieUseCase
 ) : ViewModel() {
-    private val _demoString = MutableStateFlow<String> ("")
-    var demoString: StateFlow<String> = _demoString.asStateFlow()
 
     private val _trendingMovieState = MutableStateFlow<UiState<MovieResponse>>(UiState.Idle)
     val trendingMovieState: StateFlow<UiState<MovieResponse>> = _trendingMovieState.asStateFlow()
 
     init {
-        _demoString.value = "Hello World"
         viewModelScope.launch {
             trendingMovieUseCase().collect { state ->
                 _trendingMovieState.value = state

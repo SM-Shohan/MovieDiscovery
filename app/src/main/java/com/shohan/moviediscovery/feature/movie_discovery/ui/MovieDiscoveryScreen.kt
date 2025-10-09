@@ -25,7 +25,8 @@ import com.shohan.moviediscovery.uiUtility.utilities.AnimatedLoading
 @Composable
 fun MovieDiscoveryScreen(
     movieResponse: MovieResponse?,
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
+    onClickMovie: (movieId: Int) -> Unit
 )
 {
     Box(
@@ -49,7 +50,11 @@ fun MovieDiscoveryScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(movieResponse?.movies ?: emptyList()) { movie ->
-                    MovieCard(movie = movie, onClick = {  })
+                    MovieCard(movie = movie, onClick = {
+                        onClickMovie(
+                            movie.id
+                        )
+                    })
                 }
             }
         }
@@ -62,6 +67,7 @@ fun MovieDiscoveryScreen(
 fun MovieDiscoveryScreenPreview() {
     MovieDiscoveryScreen(
         isLoading = false,
-        movieResponse = null
+        movieResponse = null,
+        onClickMovie = {}
     )
 }
