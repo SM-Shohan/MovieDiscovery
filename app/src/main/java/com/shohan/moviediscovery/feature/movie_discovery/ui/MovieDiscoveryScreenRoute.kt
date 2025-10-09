@@ -10,7 +10,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shohan.moviediscovery.feature.movie_discovery.domain.model.MovieResponse
+import com.shohan.moviediscovery.feature.movie_discovery.domain.model.PopularMovieResponse
+import com.shohan.moviediscovery.feature.movie_discovery.domain.model.TrendingMovieResponse
 import com.shohan.moviediscovery.uiUtility.utilities.UiState
 
 @Composable
@@ -21,8 +22,10 @@ fun MovieDiscoveryScreenRoute(
 {
     val context = LocalContext.current
     val trendingMovieState by viewModel.trendingMovieState.collectAsState()
+    val popularMovieState by viewModel.popularMovieState.collectAsState()
 
-    var movieResponse by remember { mutableStateOf<MovieResponse?>(null) }
+    var trendingMovieResponse by remember { mutableStateOf<TrendingMovieResponse?>(null) }
+    var popularMovieResponse by remember { mutableStateOf<PopularMovieResponse?>(null) }
     var isLoading by remember { mutableStateOf(false) }
 
     LaunchedEffect(trendingMovieState) {
@@ -33,7 +36,7 @@ fun MovieDiscoveryScreenRoute(
 
             is UiState.Success -> {
                 isLoading = false
-                movieResponse = (trendingMovieState as UiState.Success<MovieResponse>).data
+                trendingMovieResponse = (trendingMovieState as UiState.Success<TrendingMovieResponse>).data
             }
 
             is UiState.Error -> {
@@ -46,9 +49,34 @@ fun MovieDiscoveryScreenRoute(
             }
         }
     }
+
+
+    LaunchedEffect(popularMovieState) {
+        when (popularMovieState) {
+            is UiState.Loading -> {
+                isLoading = true
+            }
+
+            is UiState.Success -> {
+                isLoading = false
+                popularMovieResponse = (popularMovieState as UiState.Success<PopularMovieResponse>).data
+            }
+
+            is UiState.Error -> {
+                isLoading = false
+                Toast.makeText(context, (popularMovieState as UiState.Error).message, Toast.LENGTH_SHORT).show()
+            }
+
+            else -> {
+                //idle
+            }
+        }
+    }
+
     MovieDiscoveryScreen(
         isLoading = isLoading,
-        movieResponse = movieResponse,
+        trendingMovieResponse = trendingMovieResponse,
+        popularMovieResponse = popularMovieResponse,
         onClickMovie = { id->
             onClickMovie(id)
         }

@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shohan.moviediscovery.feature.movie_details.domain.model.MovieDetailsResponse
 import com.shohan.moviediscovery.feature.movie_details.domain.usecase.MovieDetailsUseCase
-import com.shohan.moviediscovery.feature.movie_discovery.domain.model.MovieResponse
 import com.shohan.moviediscovery.uiUtility.utilities.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,7 +1,7 @@
-package com.shohan.moviediscovery.feature.movie_details.domain.usecase
+package com.shohan.moviediscovery.feature.movie_discovery.domain.usecase
 
-import com.shohan.moviediscovery.feature.movie_details.domain.model.MovieDetailsResponse
-import com.shohan.moviediscovery.feature.movie_details.domain.repository.MovieDetailsRepo
+import com.shohan.moviediscovery.feature.movie_discovery.domain.model.PopularMovieResponse
+import com.shohan.moviediscovery.feature.movie_discovery.domain.repository.MovieDiscoveryRepo
 import com.shohan.moviediscovery.uiUtility.utilities.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -9,14 +9,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class MovieDetailsUseCase @Inject constructor(
-    private val movieDetailsRepo: MovieDetailsRepo
-
-) {
-    operator fun invoke(movieId: Int): Flow<UiState<MovieDetailsResponse>> = flow {
+class PopularMovieUseCase @Inject constructor(
+    private val movieDiscoveryRepo: MovieDiscoveryRepo
+){
+    operator fun invoke(): Flow<UiState<PopularMovieResponse>> = flow {
         emit(UiState.Loading)
         try {
-            val result = movieDetailsRepo.getMovieDetails(movieId)
+            val result = movieDiscoveryRepo.getPopularMovies()
             if (result.success){
                 emit(UiState.Success(result))
             }else{
@@ -27,4 +26,5 @@ class MovieDetailsUseCase @Inject constructor(
         }
 
     }.flowOn(Dispatchers.IO)
+
 }

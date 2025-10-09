@@ -39,11 +39,6 @@ fun MovieDetailsScreenRoute(
             is UiState.Success -> {
                 isLoading = false
                 movieDetailsResponse = (movieDetailsState as UiState.Success<MovieDetailsResponse>).data
-                Toast.makeText(
-                    context,
-                    "Parse Success",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
 
             is UiState.Error -> {

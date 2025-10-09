@@ -1,6 +1,6 @@
 package com.shohan.moviediscovery.feature.movie_discovery.domain.model
 
-data class MovieResponse(
+data class PopularMovieResponse(
     val page: Int,
     val movies: List<Movie>,
     val statusMessage: String? = null,

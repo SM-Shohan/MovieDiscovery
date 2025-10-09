@@ -1,6 +1,6 @@
 package com.shohan.moviediscovery.feature.movie_discovery.domain.usecase
 
-import com.shohan.moviediscovery.feature.movie_discovery.domain.model.MovieResponse
+import com.shohan.moviediscovery.feature.movie_discovery.domain.model.TrendingMovieResponse
 import com.shohan.moviediscovery.feature.movie_discovery.domain.repository.MovieDiscoveryRepo
 import com.shohan.moviediscovery.uiUtility.utilities.UiState
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +12,7 @@ import javax.inject.Inject
 class TrendingMovieUseCase @Inject constructor(
     private val movieDiscoveryRepo: MovieDiscoveryRepo
 ){
-    operator fun invoke(): Flow<UiState<MovieResponse>> = flow {
+    operator fun invoke(): Flow<UiState<TrendingMovieResponse>> = flow {
         emit(UiState.Loading)
         try {
             val result = movieDiscoveryRepo.getTrendingMovies()
