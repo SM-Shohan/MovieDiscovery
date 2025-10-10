@@ -17,7 +17,8 @@ import com.shohan.moviediscovery.uiUtility.utilities.UiState
 @Composable
 fun MovieDiscoveryScreenRoute(
     viewModel: MovieDiscoveryViewModel = hiltViewModel(),
-    onClickMovie: (movieId: Int) -> Unit
+    onClickMovie: (movieId: Int) -> Unit,
+    onToolbarSearchClick: () -> Unit
 )
 {
     val context = LocalContext.current
@@ -79,6 +80,9 @@ fun MovieDiscoveryScreenRoute(
         popularMovieResponse = popularMovieResponse,
         onClickMovie = { id->
             onClickMovie(id)
+        },
+        onToolbarSearchClick = {
+            onToolbarSearchClick()
         }
     )
 

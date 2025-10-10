@@ -6,5 +6,7 @@ sealed class Destinations(val route: String) {
     object MovieDetails : Destinations("movie_details/{movieId}") {
         fun createRoute(movieId: Int) = "movie_details/$movieId"
     }
+
+    object Search: Destinations("search")
 }
 

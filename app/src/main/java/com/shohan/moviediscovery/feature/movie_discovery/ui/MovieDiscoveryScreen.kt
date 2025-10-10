@@ -25,6 +25,7 @@ import com.shohan.moviediscovery.feature.movie_discovery.domain.model.Movie
 import com.shohan.moviediscovery.feature.movie_discovery.domain.model.PopularMovieResponse
 import com.shohan.moviediscovery.feature.movie_discovery.domain.model.TrendingMovieResponse
 import com.shohan.moviediscovery.feature.movie_discovery.ui.components.MovieCard
+import com.shohan.moviediscovery.feature.movie_discovery.ui.components.MoviesTopToolbar
 import com.shohan.moviediscovery.feature.movie_discovery.ui.components.genreMap
 import com.shohan.moviediscovery.uiUtility.utilities.AnimatedLoading
 
@@ -33,7 +34,8 @@ fun MovieDiscoveryScreen(
     trendingMovieResponse: TrendingMovieResponse?,
     popularMovieResponse: PopularMovieResponse?,
     isLoading: Boolean = false,
-    onClickMovie: (movieId: Int) -> Unit
+    onClickMovie: (movieId: Int) -> Unit,
+    onToolbarSearchClick: () -> Unit,
 )
 {
     val moviesList = popularMovieResponse?.movies ?: emptyList()
@@ -48,89 +50,98 @@ fun MovieDiscoveryScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        ) {
-            item {
-                Spacer(modifier = Modifier.height(40.dp))
-            }
-            if (!isLoading){
-                item{
-                    Text(
-                        text = "Trending Movies",
-                        fontSize = 22.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
-                    )
+        Column {
+            MoviesTopToolbar(
+                appName = "Movie Discovery",
+                onSearchClick = {
+                    onToolbarSearchClick()
+                },
+                onFavoriteClick = {}
+            )
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
+                item {
+                    Spacer(modifier = Modifier.height(40.dp))
                 }
-            }
-
-            item {
-                LazyRow(
-                    contentPadding = PaddingValues(start = 16.dp, end = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(trendingMovieResponse?.movies ?: emptyList()) { movie ->
-                        MovieCard(movie = movie, onClick = {
-                            onClickMovie(
-                                movie.id
-                            )
-                        })
+                if (!isLoading) {
+                    item {
+                        Text(
+                            text = "Trending Movies",
+                            fontSize = 22.sp,
+                            color = Color.Black,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
+                        )
                     }
                 }
-            }
-            item {
-                Spacer(modifier = Modifier.height(30.dp))
-            }
-            if (!isLoading){
-                item{
-                    Text(
-                        text = "Popular Movies",
-                        fontSize = 22.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
-                    )
-                }
-            }
-
-            genreToMoviesMap.forEach { (genreId, movies) ->
-                val genreName = genreMap[genreId] ?: "Unknown"
 
                 item {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp)
+                    LazyRow(
+                        contentPadding = PaddingValues(start = 16.dp, end = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        // Genre Title
-                        Text(
-                            text = genreName,
-                            color = Color.Black,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
-                        )
-
-                        // Horizontal movie list
-                        LazyRow(
-                            contentPadding = PaddingValues(horizontal = 16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            items(movies) { movie ->
-                                MovieCard(
-                                    movie = movie,
-                                    onClick = { onClickMovie(movie.id) }
+                        items(trendingMovieResponse?.movies ?: emptyList()) { movie ->
+                            MovieCard(movie = movie, onClick = {
+                                onClickMovie(
+                                    movie.id
                                 )
+                            })
+                        }
+                    }
+                }
+                item {
+                    Spacer(modifier = Modifier.height(30.dp))
+                }
+                if (!isLoading) {
+                    item {
+                        Text(
+                            text = "Popular Movies",
+                            fontSize = 22.sp,
+                            color = Color.Black,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
+                        )
+                    }
+                }
+
+                genreToMoviesMap.forEach { (genreId, movies) ->
+                    val genreName = genreMap[genreId] ?: "Unknown"
+
+                    item {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                        ) {
+                            // Genre Title
+                            Text(
+                                text = genreName,
+                                color = Color.Black,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
+                            )
+
+                            // Horizontal movie list
+                            LazyRow(
+                                contentPadding = PaddingValues(horizontal = 16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                items(movies) { movie ->
+                                    MovieCard(
+                                        movie = movie,
+                                        onClick = { onClickMovie(movie.id) }
+                                    )
+                                }
                             }
                         }
                     }
                 }
-            }
 
+            }
         }
         AnimatedLoading(isLoading = isLoading, modifier = Modifier.align(Alignment.Center))
     }
@@ -143,6 +154,7 @@ fun MovieDiscoveryScreenPreview() {
         isLoading = false,
         trendingMovieResponse = null,
         popularMovieResponse = null,
-        onClickMovie = {}
+        onClickMovie = {},
+        onToolbarSearchClick = {}
     )
 }

@@ -3,6 +3,8 @@ import com.shohan.moviediscovery.feature.movie_details.data.repoImpl.MovieDetail
 import com.shohan.moviediscovery.feature.movie_details.domain.repository.MovieDetailsRepo
 import com.shohan.moviediscovery.feature.movie_discovery.data.repositoryImpl.MovieDiscoveryRepoImpl
 import com.shohan.moviediscovery.feature.movie_discovery.domain.repository.MovieDiscoveryRepo
+import com.shohan.moviediscovery.feature.movie_search.data.repoImpl.SearchMovieRepoImpl
+import com.shohan.moviediscovery.feature.movie_search.domain.repository.SearchMovieRepo
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,4 +18,7 @@ abstract class RepositoryModule {
     abstract fun bindMovieDiscoveryRepository(impl: MovieDiscoveryRepoImpl): MovieDiscoveryRepo
     @Binds
     abstract fun bindMovieDetailsRepository(impl: MovieDetailsRepoImpl): MovieDetailsRepo
+    @Binds
+    abstract fun bindSearchMovieRepository(impl: SearchMovieRepoImpl): SearchMovieRepo
+
 }
