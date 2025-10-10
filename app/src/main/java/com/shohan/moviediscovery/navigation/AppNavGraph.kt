@@ -36,7 +36,11 @@ fun AppNavGraph(navController: NavHostController){
         }
 
         composable(Destinations.Search.route){
-            MovieSearchScreenRoute()
+            MovieSearchScreenRoute(
+                onClickMovie = {
+                    navController.navigate(Destinations.MovieDetails.createRoute(it))
+                }
+            )
         }
 
     }

@@ -30,17 +30,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.shohan.moviediscovery.feature.movie_discovery.ui.components.MovieCard
 import com.shohan.moviediscovery.feature.movie_search.domain.model.SearchMovieResponse
-import java.util.Locale
 
 @Composable
 fun MovieSearchScreen(
     searchMovieResponse: SearchMovieResponse?,
     isLoading: Boolean,
-    suggestions: List<String>,
-    onChangeSearchText: (String) -> Unit
+    onChangeSearchText: (String) -> Unit,
+    onClickMovie: (movieId: Int) -> Unit,
 ) {
     var query by remember { mutableStateOf("") }
     val searchResults = searchMovieResponse?.movies ?: emptyList()
+    val suggestions by remember(searchResults) {
+        mutableStateOf(searchResults.take(5).map { it.title })
+    }
+
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Spacer(modifier = Modifier.height(50.dp))
@@ -57,13 +60,8 @@ fun MovieSearchScreen(
         )
 
         if (suggestions.isNotEmpty() && query.isNotBlank()) {
-            val matchedSuggestions = suggestions
-                .filter { suggestion ->
-                    suggestion.lowercase(Locale.ROOT).contains(query.lowercase(Locale.ROOT))
-                }
-                .take(5)
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                items(matchedSuggestions) { suggestion ->
+                items(suggestions) { suggestion ->
                     Text(
                         text = suggestion,
                         modifier = Modifier
@@ -90,7 +88,7 @@ fun MovieSearchScreen(
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     items(searchResults) { movie ->
                         MovieCard (movie = movie) {
-
+                            onClickMovie(it.id)
                         }
                     }
                 }
@@ -112,8 +110,8 @@ fun MovieSearchScreenPreview() {
     MovieSearchScreen(
         searchMovieResponse = null,
         isLoading = false,
-        suggestions = emptyList(),
-        onChangeSearchText = {}
+        onChangeSearchText = {},
+        onClickMovie = {}
     )
 }
 

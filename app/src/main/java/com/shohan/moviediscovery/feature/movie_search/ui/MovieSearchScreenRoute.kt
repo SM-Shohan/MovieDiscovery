@@ -15,7 +15,8 @@ import com.shohan.moviediscovery.uiUtility.utilities.UiState
 
 @Composable
 fun MovieSearchScreenRoute(
-    viewModel: SearchMovieViewModel = hiltViewModel()
+    viewModel: SearchMovieViewModel = hiltViewModel(),
+    onClickMovie: (movieId: Int) -> Unit,
 ) {
     val context = LocalContext.current
     val searchMovieState by viewModel.searchMovieState.collectAsState()
@@ -47,9 +48,11 @@ fun MovieSearchScreenRoute(
     MovieSearchScreen(
         isLoading = isLoading,
         searchMovieResponse = searchMovieResponse,
-        suggestions = viewModel.getSuggestionsList(),
         onChangeSearchText = { query ->
             viewModel.searchMovies(query)
+        },
+        onClickMovie = {id->
+            onClickMovie(id)
         }
     )
 }

@@ -21,8 +21,6 @@ class SearchMovieViewModel@Inject constructor(
     private val _searchMovieState = MutableStateFlow<UiState<SearchMovieResponse>>(UiState.Idle)
     val searchMovieState: StateFlow<UiState<SearchMovieResponse>> = _searchMovieState.asStateFlow()
 
-    val  suggestions = listOf("Avengers", "Spider-Man", "Batman", "Iron Man")
-
 
     fun searchMovies(query: String){
         viewModelScope.launch {
@@ -31,10 +29,6 @@ class SearchMovieViewModel@Inject constructor(
                 _searchMovieState.value = state
             }
         }
-    }
-
-    fun getSuggestionsList(): List<String> {
-        return suggestions
     }
 
 }
