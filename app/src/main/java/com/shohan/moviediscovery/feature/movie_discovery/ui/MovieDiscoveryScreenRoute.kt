@@ -18,7 +18,8 @@ import com.shohan.moviediscovery.uiUtility.utilities.UiState
 fun MovieDiscoveryScreenRoute(
     viewModel: MovieDiscoveryViewModel = hiltViewModel(),
     onClickMovie: (movieId: Int) -> Unit,
-    onToolbarSearchClick: () -> Unit
+    onToolbarSearchClick: () -> Unit,
+    onToolbarFavoriteClick: () -> Unit
 )
 {
     val context = LocalContext.current
@@ -83,6 +84,9 @@ fun MovieDiscoveryScreenRoute(
         },
         onToolbarSearchClick = {
             onToolbarSearchClick()
+        },
+        onToolbarFavoriteClick = {
+            onToolbarFavoriteClick()
         }
     )
 

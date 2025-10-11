@@ -29,7 +29,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.shohan.moviediscovery.feature.movie_discovery.ui.components.MovieCard
+import com.shohan.moviediscovery.feature.movie_fav.ui.components.FavTopToolbar
 import com.shohan.moviediscovery.feature.movie_search.domain.model.SearchMovieResponse
+import com.shohan.moviediscovery.feature.movie_search.ui.components.SearchTopToolbar
 
 @Composable
 fun MovieSearchScreen(
@@ -37,6 +39,7 @@ fun MovieSearchScreen(
     isLoading: Boolean,
     onChangeSearchText: (String) -> Unit,
     onClickMovie: (movieId: Int) -> Unit,
+    onBackClick: () -> Unit
 ) {
     var query by remember { mutableStateOf("") }
     val searchResults = searchMovieResponse?.movies ?: emptyList()
@@ -45,8 +48,14 @@ fun MovieSearchScreen(
     }
 
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Spacer(modifier = Modifier.height(50.dp))
+    Column(modifier = Modifier.fillMaxSize()) {
+        SearchTopToolbar(
+            appName = "Search Movies",
+            onBackClick = {
+                onBackClick()
+            }
+        )
+        Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(
             value = query,
             onValueChange = {
@@ -56,7 +65,7 @@ fun MovieSearchScreen(
             label = { Text("Search movies...") },
             singleLine = true,
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
         )
 
         if (suggestions.isNotEmpty() && query.isNotBlank()) {
@@ -111,7 +120,8 @@ fun MovieSearchScreenPreview() {
         searchMovieResponse = null,
         isLoading = false,
         onChangeSearchText = {},
-        onClickMovie = {}
+        onClickMovie = {},
+        onBackClick = {}
     )
 }
 

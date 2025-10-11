@@ -16,13 +16,14 @@ import com.shohan.moviediscovery.uiUtility.utilities.UiState
 @Composable
 fun MovieDetailsScreenRoute(
     viewModel: MovieDetailsViewModel = hiltViewModel(),
-    movieId: Int
-
+    movieId: Int,
+    onBackClick: () -> Unit
 ){
 
     val context = LocalContext.current
 
     val movieDetailsState by viewModel.movieDetailsState.collectAsState()
+    val isSavedToFav by viewModel.isSavedToFav.collectAsState()
     var isLoading by remember { mutableStateOf(false) }
     var movieDetailsResponse by remember { mutableStateOf<MovieDetailsResponse?>(null) }
 
@@ -39,6 +40,7 @@ fun MovieDetailsScreenRoute(
             is UiState.Success -> {
                 isLoading = false
                 movieDetailsResponse = (movieDetailsState as UiState.Success<MovieDetailsResponse>).data
+                viewModel.checkIfSavedToFav(movieId)
             }
 
             is UiState.Error -> {
@@ -58,7 +60,14 @@ fun MovieDetailsScreenRoute(
 
     MovieDetailsScreen(
         movieResponse = movieDetailsResponse,
-        isLoading = isLoading
+        isLoading = isLoading,
+        isFavMovie = isSavedToFav,
+        onClickFav = {
+            viewModel.toggleSaveFav(it)
+        },
+        onBackClick = {
+            onBackClick()
+        }
     )
 
 }

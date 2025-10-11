@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.shohan.moviediscovery.feature.movie_details.ui.MovieDetailsScreenRoute
 import com.shohan.moviediscovery.feature.movie_discovery.ui.MovieDiscoveryScreenRoute
+import com.shohan.moviediscovery.feature.movie_fav.ui.FavMovieScreenRoute
 import com.shohan.moviediscovery.feature.movie_search.ui.MovieSearchScreenRoute
 
 @Composable
@@ -23,6 +24,9 @@ fun AppNavGraph(navController: NavHostController){
                 },
                 onToolbarSearchClick = {
                     navController.navigate(Destinations.Search.route)
+                },
+                onToolbarFavoriteClick = {
+                    navController.navigate(Destinations.Favourite.route)
                 }
             )
         }
@@ -32,13 +36,29 @@ fun AppNavGraph(navController: NavHostController){
             arguments = listOf(navArgument("movieId") { type = NavType.IntType })
         ) { backStackEntry ->
             val movieId = backStackEntry.arguments?.getInt("movieId") ?: 0
-            MovieDetailsScreenRoute(movieId = movieId)
+            MovieDetailsScreenRoute(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                movieId = movieId
+            )
         }
 
         composable(Destinations.Search.route){
             MovieSearchScreenRoute(
                 onClickMovie = {
                     navController.navigate(Destinations.MovieDetails.createRoute(it))
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(Destinations.Favourite.route){
+            FavMovieScreenRoute(
+                onBackClick = {
+                    navController.popBackStack()
                 }
             )
         }

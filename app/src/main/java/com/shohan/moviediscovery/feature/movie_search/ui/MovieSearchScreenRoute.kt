@@ -17,6 +17,7 @@ import com.shohan.moviediscovery.uiUtility.utilities.UiState
 fun MovieSearchScreenRoute(
     viewModel: SearchMovieViewModel = hiltViewModel(),
     onClickMovie: (movieId: Int) -> Unit,
+    onBackClick: () -> Unit
 ) {
     val context = LocalContext.current
     val searchMovieState by viewModel.searchMovieState.collectAsState()
@@ -53,6 +54,9 @@ fun MovieSearchScreenRoute(
         },
         onClickMovie = {id->
             onClickMovie(id)
+        },
+        onBackClick = {
+            onBackClick()
         }
     )
 }

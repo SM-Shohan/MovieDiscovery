@@ -36,6 +36,7 @@ fun MovieDiscoveryScreen(
     isLoading: Boolean = false,
     onClickMovie: (movieId: Int) -> Unit,
     onToolbarSearchClick: () -> Unit,
+    onToolbarFavoriteClick: () -> Unit
 )
 {
     val moviesList = popularMovieResponse?.movies ?: emptyList()
@@ -56,7 +57,10 @@ fun MovieDiscoveryScreen(
                 onSearchClick = {
                     onToolbarSearchClick()
                 },
-                onFavoriteClick = {}
+                onFavoriteClick = {
+                    onToolbarFavoriteClick()
+
+                }
             )
             LazyColumn(
                 modifier = Modifier
@@ -155,6 +159,7 @@ fun MovieDiscoveryScreenPreview() {
         trendingMovieResponse = null,
         popularMovieResponse = null,
         onClickMovie = {},
-        onToolbarSearchClick = {}
+        onToolbarSearchClick = {},
+        onToolbarFavoriteClick = {}
     )
 }

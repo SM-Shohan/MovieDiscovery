@@ -1,14 +1,17 @@
 package com.shohan.moviediscovery.feature.movie_details.data.repoImpl
 
 import com.shohan.moviediscovery.feature.movie_details.data.mapper.toDomain
+import com.shohan.moviediscovery.feature.movie_details.data.mapper.toEntity
 import com.shohan.moviediscovery.feature.movie_details.domain.model.MovieDetailsResponse
 import com.shohan.moviediscovery.feature.movie_details.domain.repository.MovieDetailsRepo
+import com.shohan.moviediscovery.feature.movie_fav.data.local.FavMovieDao
 import com.shohan.moviediscovery.requestHandler.APIService
 import java.io.IOException
 import javax.inject.Inject
 
 class MovieDetailsRepoImpl @Inject constructor(
-    private val apiService: APIService
+    private val apiService: APIService,
+    private val movieDao: FavMovieDao
 ): MovieDetailsRepo{
     override suspend fun getMovieDetails(movieId: Int): MovieDetailsResponse {
         val apikey = "2528dd64d1c9570839cf27bdca4e7bd8"
@@ -45,5 +48,18 @@ class MovieDetailsRepoImpl @Inject constructor(
                 isAdult = false
             )
         }
+    }
+
+    override suspend fun saveFavMovie(movie: MovieDetailsResponse) {
+        val entity = movie.toEntity()
+        movieDao.insertMovie(entity)
+    }
+
+    override suspend fun isMovieFav(movieId: Int): Boolean {
+        return movieDao.getMovieById(movieId) != null
+    }
+
+    override suspend fun deleteFavMovie(movie: MovieDetailsResponse) {
+        movieDao.deleteMovie(movie.toEntity())
     }
 }
