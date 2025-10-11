@@ -53,5 +53,6 @@ It’s designed to provide a smooth, modern, and dynamic experience — all whil
 
 ## Architecture Overview
 
-This app is built using **Clean Architecture** layered as follows:
+This app is built using **Clean Architecture**, which emphasizes separation of concerns, testability, and scalability.  
+Each layer has a single, well-defined responsibility and communicates only with its adjacent layer through clear contracts (interfaces).
 
