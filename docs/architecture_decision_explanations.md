@@ -226,22 +226,3 @@ Domain Models
     ↓
 UI Update
 ```
-
-## Future Improvements
-
-### Planned Enhancements
-1. Implement Paging 3 for efficient list loading
-2. Add WorkManager for background operations
-3. Support offline mode with NetworkBoundResource
-4. Integrate Navigation Compose
-5. Comprehensive test coverage
-
-### Performance Optimizations
-- Implement memory caching
-- Optimize image loading
-- Add prefetching for movie lists
-
-### Testing Strategy
-- Unit tests for ViewModels and Use Cases
-- Integration tests for Repository layer
-- UI tests using Compose testing framework
